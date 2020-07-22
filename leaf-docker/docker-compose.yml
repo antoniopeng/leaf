@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  leaf-server:
+    image: leaf-server
+    container_name: leaf-server
+    ports:
+      - 8080:8080
+      - 2182:2182
+    depends_on:
+      - leaf-zookeeper
+    links:
+      - leaf-zookeeper
+
+  leaf-zookeeper:
+    image: zookeeper:3.4
+    container_name: leaf-zookeeper
+    hostname: leaf-zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=leaf-zookeeper:2888:3888
